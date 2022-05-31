@@ -235,9 +235,13 @@ function solve() {
 //display x (answer) in page
 function showX() {
     var el = document.getElementById("x-matrix")
+    while(el.getElementsByTagName("h3").length > 1) {
+        var children = el.getElementsByTagName("h3")
+        el.removeChild(children[1])
+    }
     for(var i = 0; i < xMatrix.length; ++i) {
         var ans = document.createElement("h3")
-        ans.innerHTML = `x<sub>${i}</sub> = ${xMatrix[i]}`
+        ans.innerHTML = `x<sub>${i}</sub> = ${Math.round((xMatrix[i] + Number.EPSILON) * 1000) / 1000}`
         el.appendChild(ans)
     }
     el.style.display = "block"
