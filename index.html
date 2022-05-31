@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gaussian Elimination Calculator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css"></link>
+    </head>
+    <body>
+        <h1>GAUSSIAN ELIMINATION CALCULATOR</h1>
+        <p id="instructions">Choose the size of <b>A</b> matrix, then enter your values for <b>A</b> and <b>b</b> matrices to solve for <b>x</b> vector in equation <b>Ax = b</b></p>
+        <p id="matrix-size-error">Matrix size n must be a positive number such that 2 &lt;= n &lt;= 10</p>
+        <form>
+            <label>Solve for <b>A</b> matrix of size <b>n <span id="by">x</span> n</b> where <b>n</b> is:</label>
+            <input type="number" id="matrix-size">
+        </form>
+        <div id="matrices-container">
+            <div>
+                <h3 class="matrix-label">A MATRIX:</h3>
+                <div id="amatrix"></div>
+            </div>
+            <div>
+                <h3 class="matrix-label b">B MATRIX:</h3>
+                <div id="bmatrix"></div>
+            </div>
+        </div>
+        <p id="matrix-entries-error">All entries in A and b matrices must be valid numbers</p>
+        <button id="solve">SOLVE FOR X</button>
+        <div id="x-matrix">
+            <h3>X MATRIX:</h3>
+        </div>
+    </body>
+    <script src="scripts.js"></script>
+</html>

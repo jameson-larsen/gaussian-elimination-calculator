@@ -1,0 +1,99 @@
+* {
+    padding:0;
+    margin:0;
+    font-family: 'Montserrat', sans-serif;
+}
+body {
+    text-align:center;
+    background-color:lightgray;
+    padding:50px 10px;
+}
+h1 {
+    margin-bottom:20px;
+    padding:0 15px;
+}
+#instructions {
+    text-align:center;
+    margin:0 auto 20px auto;
+}
+input[type=number] {
+    width:35px;
+    -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#matrix-size-error, #matrix-entries-error {
+    color:red;
+    display:none;
+    font-size:12px;
+    margin-bottom:2px;
+}
+#amatrix, #bmatrix {
+    width:300px;
+    height:300px;
+    display:grid;
+    grid-column-gap:5px;
+    grid-row-gap:5px;
+    margin:0 auto;
+}
+#bmatrix {
+    width:100px;
+    grid-template-columns:1fr;
+}
+#amatrix input, #bmatrix input {
+    text-align:center;
+    border-color:#dbdbdb;
+}
+#by {
+    font-size:11px;
+    vertical-align:middle;
+}
+.matrix-label {
+    display:none;
+    text-align:center;
+    margin-bottom:25px;
+}
+#matrices-container {
+    display:grid;
+    grid-template-rows:1fr;
+    grid-template-columns:350px 150px;
+    margin:50px auto 60px auto;
+    align-items:center;
+    justify-content:center;
+}
+#solve {
+    display:none;
+    padding:5px;
+    margin:15px auto;
+    font-size:22px;
+    cursor:pointer;
+}
+#x-matrix {
+    display:none;
+}
+#x-matrix h3 {
+    font-weight:normal;
+    margin-top:10px;
+}
+#x-matrix h3:first-child {
+    margin-top:50px;
+    font-weight:bold;
+}
+@media only screen and (max-width: 500px) {
+    #matrices-container {
+        grid-template-columns:1fr;
+        grid-template-rows:380px 380px;
+        grid-row-gap:35px;
+    }
+}
+@media only screen and (max-width: 400px) {
+    #matrix-size-error {
+        font-size:9px;
+    }
+    label, #instructions {
+        font-size:12px;
+    }
+}
