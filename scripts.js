@@ -239,8 +239,8 @@ function showX() {
         var children = el.getElementsByTagName("h3")
         el.removeChild(children[1])
     }
-    //remove infinitely many/no solutions answer from page
-    while(el.getElementsByTagName("p").length > 0) {
+    //remove infinitely many/no solutions answer paragraph from page
+    if(el.getElementsByTagName("p").length > 0) {
         var children = el.getElementsByTagName("p")
         el.removeChild(children[0])
     }
