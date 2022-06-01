@@ -82,6 +82,13 @@ input::-webkit-inner-spin-button {
     margin-top:50px;
     font-weight:bold;
 }
+#x-matrix p {
+    font-weight:14px;
+    max-width:600px;
+    margin:10px auto;
+    padding:0 20px;
+    text-align:center;
+}
 @media only screen and (max-width: 500px) {
     #matrices-container {
         grid-template-columns:1fr;

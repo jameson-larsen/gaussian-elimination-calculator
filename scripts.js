@@ -239,32 +239,29 @@ function showX() {
         var children = el.getElementsByTagName("h3")
         el.removeChild(children[1])
     }
-    //if x matrix contains infinite values, the system has no solution
-    if(xMatrix.indexOf(Number.POSITIVE_INFINITY) !== -1 || xMatrix.indexOf(Number.NEGATIVE_INFINITY) !== -1) {
-        var ans = document.createElement("h3")
-        ans.innerHTML = "NO SOLUTION"
-        el.appendChild(ans)
+    //remove infinitely many/no solutions answer from page
+    while(el.getElementsByTagName("p").length > 0) {
+        var children = el.getElementsByTagName("p")
+        el.removeChild(children[0])
     }
-    else {
-        var infiniteSolutions = false
-        //if any values in x matrix are NaN, system has infinitely many solutions
-        for(var i = 0; i < xMatrix.length; ++i) {
-            //if we have infinitely many solutions, output that to page and return
-            if(isNaN(xMatrix[i])) {
-                var ans = document.createElement("h3")
-                ans.innerHTML = "INFINITELY MANY SOLUTIONS"
-                el.appendChild(ans)
-                infiniteSolutions = true
-                break
-            }
+    var hasNaN = false
+    //if any values in x matrix are NaN, system has no or infinitely many solutions
+    for(var i = 0; i < xMatrix.length; ++i) {
+        //if we have no or infinitely many solutions, output that to page and return
+        if(isNaN(xMatrix[i]) || xMatrix[i] === Number.POSITIVE_INFINITY || xMatrix[i] === Number.NEGATIVE_INFINITY) {
+            var ans = document.createElement("p")
+            ans.innerHTML = "SYSTEM HAS NO UNIQUE SOLUTION - SYSTEM IS EITHER DEPENDENT (INFINITELY MANY SOLUTIONS), OR INCONSISTENT (NO SOLUTION)"
+            el.appendChild(ans)
+            hasNaN = true
+            break
         }
-        //if we have a single unique solution, output x matrix to page
-        if(!infiniteSolutions) {
-            for(var i = 0; i < xMatrix.length; ++i) {
-                var ans = document.createElement("h3")
-                ans.innerHTML = `x<sub>${i}</sub> = ${Math.round((xMatrix[i] + Number.EPSILON) * 1000) / 1000}`
-                el.appendChild(ans)
-            }
+    }
+    //if we have a single unique solution, output x matrix to page
+    if(!hasNaN) {
+        for(var i = 0; i < xMatrix.length; ++i) {
+            var ans = document.createElement("h3")
+            ans.innerHTML = `x<sub>${i}</sub> = ${Math.round((xMatrix[i] + Number.EPSILON) * 1000) / 1000}`
+            el.appendChild(ans)
         }
     }
     el.style.display = "block"
@@ -291,6 +288,7 @@ el.addEventListener("input", (ev) => {
         matrixSize = size
         //hide matrix size error
         document.getElementById("matrix-size-error").style.display = "none"
+        document.getElementById("x-matrix").style.display = "none"
         createAMatrix()
         createBMatrix()
     }
