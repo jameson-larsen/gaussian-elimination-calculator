@@ -231,6 +231,48 @@ function solve() {
     }
 }
 
+//find number of solutions based on U matrix
+function numSolutions() {
+    //first check if we have a unique solution or not (all diagonal entries are nonzero)
+    var uniqueSolution = true
+    var noSolution = false
+    var infiniteSolutions = false
+    for(var i = 0; i < uMatrix.length; ++i) {
+        if(uMatrix[i][i] === 0) {
+            uniqueSolution = false
+        }
+    }
+    //if we don't have a unique solution, check whether we have 0 or infinite solutions
+    if(!uniqueSolution) {
+        infiniteSolutions = true
+        //a row of all zeros indicates infinitely many solutions
+        for(var i = 0; i < uMatrix.length; ++i) {
+            var allZero = true
+            for(var j = 0; j < uMatrix[i].length; ++j) {
+                if(uMatrix[i][j] !== 0) {
+                    allZero = false
+                    break
+                }
+            }
+            //a row of all zeros except for the last column (entry in c matrix) indicates no solutions
+            if(allZero && cMatrix[i] !== 0) {
+                infiniteSolutions = false
+                noSolution = true
+                break
+            }
+        }
+    }
+    if(uniqueSolution) {
+        return 1
+    }
+    else if(infiniteSolutions) {
+        return 2
+    }
+    else {
+        return 3
+    }
+}
+
 //display x (answer) in page
 function showX() {
     var el = document.getElementById("x-matrix")
@@ -239,30 +281,25 @@ function showX() {
         var children = el.getElementsByTagName("h3")
         el.removeChild(children[1])
     }
-    //remove infinitely many/no solutions answer paragraph from page
-    if(el.getElementsByTagName("p").length > 0) {
-        var children = el.getElementsByTagName("p")
-        el.removeChild(children[0])
-    }
-    var hasNaN = false
-    //if any values in x matrix are NaN, system has no or infinitely many solutions
-    for(var i = 0; i < xMatrix.length; ++i) {
-        //if we have no or infinitely many solutions, output that to page and return
-        if(isNaN(xMatrix[i]) || xMatrix[i] === Number.POSITIVE_INFINITY || xMatrix[i] === Number.NEGATIVE_INFINITY) {
-            var ans = document.createElement("p")
-            ans.innerHTML = "SYSTEM HAS NO UNIQUE SOLUTION - SYSTEM IS EITHER DEPENDENT (INFINITELY MANY SOLUTIONS), OR INCONSISTENT (NO SOLUTION)"
-            el.appendChild(ans)
-            hasNaN = true
-            break
-        }
-    }
-    //if we have a single unique solution, output x matrix to page
-    if(!hasNaN) {
+    //get number of solutions of system: 1 indicates 1, 2 indicates infinite, 3 indicates 0
+    var solutions = numSolutions()
+    //if we have a unique solution, output it
+    if(solutions === 1) {
         for(var i = 0; i < xMatrix.length; ++i) {
             var ans = document.createElement("h3")
             ans.innerHTML = `x<sub>${i}</sub> = ${Math.round((xMatrix[i] + Number.EPSILON) * 1000) / 1000}`
             el.appendChild(ans)
         }
+    }
+    else if(solutions === 2) {
+        var ans = document.createElement("h3")
+        ans.innerHTML = "DEPENDENT SYSTEM - INFINITE SOLUTIONS"
+        el.appendChild(ans)
+    }
+    else {
+        var ans = document.createElement("h3")
+        ans.innerHTML = "INCONSISTENT SYSTEM - NO SOLUTIONS"
+        el.appendChild(ans)
     }
     el.style.display = "block"
 }
